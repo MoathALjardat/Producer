@@ -1,26 +1,27 @@
 package com.example.demo.Producer.controllers;
 
-import com.example.demo.student.models.Student;
-import com.example.demo.student.services.StudentService;
+import org.junit.platform.runner.JUnitPlatform;
 
-import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 
-@RunWith(SpringRunner.class)
-@WebMvcTest(ProducerController.class)
+import com.example.demo.student.Student;
+import com.example.demo.student.services.StudentService;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@RunWith(JUnitPlatform.class)
+@ExtendWith(MockitoExtension.class)
 public class ProducerControllerTest {
 
     @InjectMocks
@@ -59,5 +60,44 @@ public class ProducerControllerTest {
 
         assertThat(countForCheck).isEqualTo(count);
     }
-}
 
+
+    @Test
+    public void findStudentGpaByIdTest() throws InterruptedException {
+
+        // given
+        Student student = new Student(1, "Moath", 20, 99.9, "CS");
+
+        when(studentService.getStudentById(anyInt())).thenReturn(student);
+
+        // when
+        double gpaByIdForCheck = producerController.findStudentGpaById(anyInt()).getGpa();
+
+        // then
+        assertThat(gpaByIdForCheck).isEqualTo(student.getGpa());
+
+    }
+
+    @Test
+    public void getStudentsThierMarkesAbove50Test() throws InterruptedException {
+        // given
+        Student student1 = new Student(1, "Moath", 20, 99.9, "CS");
+        Student student2 = new Student(2, "Layth", 21, 89.8, "CS");
+        Student student3 = new Student(3, "Mojahed", 22, 89.8, "CE");
+
+        List<Student> students = new ArrayList<Student>();
+
+        students.add(student1);
+        students.add(student2);
+        students.add(student3);
+
+
+        when(studentService.getStudentsThierMarkesAbove50()).thenReturn(students);
+
+        // when
+        List<Student> studentsToCheck = producerController.getStudentsThierMarkesAbove50();
+
+        // then
+        assertThat(studentsToCheck).isEqualTo(students);
+    }
+}

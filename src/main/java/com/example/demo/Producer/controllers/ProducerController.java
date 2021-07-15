@@ -1,6 +1,6 @@
 package com.example.demo.Producer.controllers;
 
-import com.example.demo.student.models.Student;
+import com.example.demo.student.Student;
 import com.example.demo.student.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
