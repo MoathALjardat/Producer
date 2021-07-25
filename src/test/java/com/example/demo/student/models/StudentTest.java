@@ -1,9 +1,6 @@
 package com.example.demo.student.models;
 
-import com.example.demo.student.Student;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.logging.Logger;
 
@@ -27,16 +24,18 @@ public class StudentTest {
     public void tearDown() throws Exception {
         Logger logger = Logger.getLogger(StudentTest.class.getName());
         logger.info("Test Completed");
-
     }
 
     @Test
+    @DisplayName("Check if the constructor is run successfully")
+    @Tag("Constructor")
     public void testStudentDetails() throws Exception {
         assertEquals(EXPECTED_ID, student.getId());
         assertEquals(EXPECTED_NAME, student.getName());
         assertEquals(EXPECTED_AGE, student.getAge());
         assertEquals(EXPECTED_GPA, student.getGpa());
         assertEquals(EXPECTED_MAJOR, student.getMajor());
+
 
     }
 
